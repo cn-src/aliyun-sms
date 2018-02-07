@@ -13,25 +13,15 @@
 
 package cn.javaer.aliyun.spring.boot.autoconfigure.sms;
 
-import lombok.Getter;
-import lombok.Setter;
-import org.springframework.boot.context.properties.ConfigurationProperties;
-
 /**
  * @author zhangpeng
  */
-@Getter
-@Setter
-@ConfigurationProperties(prefix = "aliyun.sms")
-public class AliyunSmsProperties {
+public class SmsSendException extends RuntimeException {
+    public SmsSendException(final String message) {
+        super(message);
+    }
 
-    private final String product = "Dysmsapi";
-    private final String domain = "dysmsapi.aliyuncs.com";
-    private final String region = "cn-hangzhou";
-
-    private String accessKeyId;
-    private String accessKeySecret;
-    private String signName;
-    private String authTemplateCode;
-
+    public SmsSendException(final Throwable cause) {
+        super(cause);
+    }
 }
