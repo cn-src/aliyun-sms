@@ -11,7 +11,7 @@
  * limitations under the License.
  */
 
-package cn.javaer.aliyun.spring.boot.autoconfigure.sms;
+package cn.javaer.aliyun.sms;
 
 /**
  * @author zhangpeng
