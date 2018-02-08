@@ -86,7 +86,7 @@ public class SmsClient {
         request.setMethod(MethodType.POST);
         request.setPhoneNumbers(phoneNumber);
         request.setSignName(this.smsProperties.getSignName());
-        request.setTemplateCode(this.smsProperties.getAuthTemplateCode());
+        request.setTemplateCode(this.smsProperties.getAuthenticationTemplateCode());
         request.setTemplateParam("{\"code\":\"" + code + "\"}");
         try {
             final SendSmsResponse response = this.acsClient.getAcsResponse(request);
