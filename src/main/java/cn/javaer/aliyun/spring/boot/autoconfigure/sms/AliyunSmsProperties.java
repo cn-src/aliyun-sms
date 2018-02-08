@@ -32,6 +32,6 @@ public class AliyunSmsProperties {
     private String accessKeyId;
     private String accessKeySecret;
     private String signName;
-    private String authTemplateCode;
+    private String authenticationTemplateCode;
 
 }
