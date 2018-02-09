@@ -20,7 +20,6 @@ import com.aliyuncs.dysmsapi.model.v20170525.SendSmsResponse;
 import com.aliyuncs.http.MethodType;
 import com.aliyuncs.profile.DefaultProfile;
 import com.aliyuncs.profile.IClientProfile;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.util.Arrays;
 import java.util.stream.Collectors;
@@ -35,7 +34,6 @@ public class SmsClient {
     private final String domain = "dysmsapi.aliyuncs.com";
     private final String region = "cn-hangzhou";
     private final String endpointName = "cn-hangzhou";
-    private final ObjectMapper objectMapper = new ObjectMapper();
     private SmsTemplate.Builder authenticationSmsTemplateBuilder;
 
     /**
