@@ -17,11 +17,9 @@ import com.aliyuncs.DefaultAcsClient;
 import com.aliyuncs.IAcsClient;
 import com.aliyuncs.dysmsapi.model.v20170525.SendSmsRequest;
 import com.aliyuncs.dysmsapi.model.v20170525.SendSmsResponse;
-import com.aliyuncs.exceptions.ClientException;
 import com.aliyuncs.http.MethodType;
 import com.aliyuncs.profile.DefaultProfile;
 import com.aliyuncs.profile.IClientProfile;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.util.Arrays;
@@ -32,7 +30,6 @@ import java.util.stream.Collectors;
  */
 public class SmsClient {
 
-    private static final String SUCCESS_CODE = "OK";
     private static final String PHONE_NUMBER_REGEX = "((13[0-9])|(14[5|7])|(15([0-3]|[5-9]))|(18[0,5-9]))\\d{8}";
     private final IAcsClient acsClient;
     private final String product = "Dysmsapi";
@@ -51,11 +48,7 @@ public class SmsClient {
     public SmsClient(final String accessKeyId, final String accessKeySecret) {
         final IClientProfile clientProfile = DefaultProfile.getProfile(
                 this.region, accessKeyId, accessKeySecret);
-        try {
-            DefaultProfile.addEndpoint(this.endpointName, this.region, this.product, this.domain);
-        } catch (final ClientException e) {
-            throw new RuntimeException(e);
-        }
+        Utils.tryFun(() -> DefaultProfile.addEndpoint(this.endpointName, this.region, this.product, this.domain));
         this.acsClient = new DefaultAcsClient(clientProfile);
     }
 
@@ -78,24 +71,10 @@ public class SmsClient {
         request.setPhoneNumbers(Arrays.stream(phoneNumbers).collect(Collectors.joining(",")));
         request.setSignName(smsTemplate.getSignName());
         request.setTemplateCode(smsTemplate.getTemplateCode());
-        try {
-            final String param = this.objectMapper.writeValueAsString(smsTemplate.getTemplateParam());
-            request.setTemplateParam(param);
-        } catch (final JsonProcessingException e) {
-            throw new RuntimeException(e);
-        }
-
-        try {
-            final SendSmsResponse response = this.acsClient.getAcsResponse(request);
-            if (null == response) {
-                throw new SmsSendException("Response is null");
-            }
-            if (!SUCCESS_CODE.equalsIgnoreCase(response.getCode())) {
-                throw new SmsSendException("Response code is '" + response.getCode() + "'");
-            }
-        } catch (final ClientException e) {
-            throw new SmsSendException(e);
-        }
+        final String param = Utils.tryFun(() -> this.objectMapper.writeValueAsString(smsTemplate.getTemplateParam()));
+        request.setTemplateParam(param);
+        final SendSmsResponse response = Utils.tryFun(() -> this.acsClient.getAcsResponse(request));
+        Utils.checkSmsResponse(response);
     }
 
     public void setAuthenticationSmsTemplate(final SmsTemplate authenticationSmsTemplate) {

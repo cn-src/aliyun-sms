@@ -1,5 +1,7 @@
 package cn.javaer.aliyun.sms;
 
+import com.aliyuncs.dysmsapi.model.v20170525.SendSmsResponse;
+
 import java.util.Random;
 
 /**
@@ -7,6 +9,7 @@ import java.util.Random;
  */
 class Utils {
 
+    private static final String SUCCESS_CODE = "OK";
     private static final Random RANDOM = new Random();
 
     /**
@@ -33,4 +36,36 @@ class Utils {
         return startInclusive + RANDOM.nextInt(endExclusive - startInclusive);
     }
 
+    static void checkSmsResponse(final SendSmsResponse response) {
+        if (null == response) {
+            throw new SmsException("Response is null");
+        }
+        if (!SUCCESS_CODE.equalsIgnoreCase(response.getCode())) {
+            throw new SmsException("Response code is '" + response.getCode() + "'");
+        }
+    }
+
+    static <T> T tryFun(final CheckedSupplier<T> fun) {
+        try {
+            return fun.get();
+        } catch (final Exception e) {
+            if (e instanceof RuntimeException) {
+                throw (RuntimeException) e;
+            } else {
+                throw new SmsException(e);
+            }
+        }
+    }
+
+    static void tryFun(final CheckedVoid fun) {
+        try {
+            fun.call();
+        } catch (final Exception e) {
+            if (e instanceof RuntimeException) {
+                throw (RuntimeException) e;
+            } else {
+                throw new SmsException(e);
+            }
+        }
+    }
 }

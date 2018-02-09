@@ -16,12 +16,12 @@ package cn.javaer.aliyun.sms;
 /**
  * @author zhangpeng
  */
-public class SmsSendException extends RuntimeException {
-    public SmsSendException(final String message) {
+public class SmsException extends RuntimeException {
+    public SmsException(final String message) {
         super(message);
     }
 
-    public SmsSendException(final Throwable cause) {
+    public SmsException(final Throwable cause) {
         super(cause);
     }
 }
