@@ -21,13 +21,8 @@ class Utils {
      * @return 随机数
      */
     static int nextInt(final int startInclusive, final int endExclusive) {
-
-        if (endExclusive < startInclusive) {
-            throw new IllegalArgumentException("Start value must be smaller or equal to end value.");
-        }
-        if (startInclusive < 0) {
-            throw new IllegalArgumentException("Both range values must be non-negative.");
-        }
+        checkArgument(endExclusive >= startInclusive, "Start value must be smaller or equal to end value.");
+        checkArgument(startInclusive >= 0, "Both range values must be non-negative.");
 
         if (startInclusive == endExclusive) {
             return startInclusive;
@@ -42,6 +37,18 @@ class Utils {
         }
         if (!SUCCESS_CODE.equalsIgnoreCase(response.getCode())) {
             throw new SmsException("Response code is '" + response.getCode() + "'");
+        }
+    }
+
+    static void checkNotEmpty(final String str, final String message) {
+        if (null == str || str.isEmpty()) {
+            throw new IllegalArgumentException(message);
+        }
+    }
+
+    static void checkArgument(final boolean expression, final String message) {
+        if (!expression) {
+            throw new IllegalArgumentException(message);
         }
     }
 
