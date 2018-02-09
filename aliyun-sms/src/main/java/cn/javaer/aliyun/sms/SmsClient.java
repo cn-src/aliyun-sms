@@ -57,7 +57,7 @@ public class SmsClient {
     /**
      * 发送身份验证验证码.
      *
-     * @param phoneNumber 中国手机号码
+     * @param phoneNumber 手机号码(中国)
      *
      * @return 6 位数的随机码
      */
