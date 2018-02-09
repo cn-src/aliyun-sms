@@ -75,8 +75,7 @@ public class SmsClient {
         request.setPhoneNumbers(Arrays.stream(phoneNumbers).collect(Collectors.joining(",")));
         request.setSignName(smsTemplate.getSignName());
         request.setTemplateCode(smsTemplate.getTemplateCode());
-        final String param = Utils.tryChecked(() -> this.objectMapper.writeValueAsString(smsTemplate.getTemplateParam()));
-        request.setTemplateParam(param);
+        request.setTemplateParam(Utils.toJsonStr(smsTemplate.getTemplateParam()));
         final SendSmsResponse response = Utils.tryChecked(() -> this.acsClient.getAcsResponse(request));
         Utils.checkSmsResponse(response);
     }

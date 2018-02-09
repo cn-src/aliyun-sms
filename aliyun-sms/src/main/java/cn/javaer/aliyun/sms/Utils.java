@@ -2,6 +2,7 @@ package cn.javaer.aliyun.sms;
 
 import com.aliyuncs.dysmsapi.model.v20170525.SendSmsResponse;
 
+import java.util.Map;
 import java.util.Random;
 
 /**
@@ -22,6 +23,31 @@ class Utils {
      */
     static int randomCode() {
         return 100_000 + RANDOM.nextInt(1_000_000 - 100_000);
+    }
+
+    /**
+     * Map 转 json 字符串的简单实现.
+     *
+     * @param map the map
+     *
+     * @return the json string
+     */
+    static String toJsonStr(final Map<String, String> map) {
+        final StringBuilder sb = new StringBuilder();
+        sb.append('{');
+        for (final Map.Entry<String, String> entry : map.entrySet()) {
+            sb.append('"')
+                    .append(entry.getKey().replace("\"", "\\\""))
+                    .append('"')
+                    .append(':')
+                    .append('"')
+                    .append(entry.getValue().replace("\"", "\\\""))
+                    .append('"')
+                    .append(',');
+        }
+        sb.deleteCharAt(sb.length() - 1);
+        sb.append('}');
+        return sb.toString();
     }
 
     /**
