@@ -46,6 +46,9 @@ public class SmsClient {
      * @param accessKeySecret 阿里云短信 accessKeySecret
      */
     public SmsClient(final String accessKeyId, final String accessKeySecret) {
+        Utils.checkNotEmpty(accessKeyId, "'accessKeyId' must be not empty");
+        Utils.checkNotEmpty(accessKeySecret, "'accessKeySecret' must be not empty");
+
         final IClientProfile clientProfile = DefaultProfile.getProfile(
                 this.region, accessKeyId, accessKeySecret);
         Utils.tryFun(() -> DefaultProfile.addEndpoint(this.endpointName, this.region, this.product, this.domain));
