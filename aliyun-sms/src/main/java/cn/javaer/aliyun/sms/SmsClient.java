@@ -62,6 +62,8 @@ public class SmsClient {
      * @return 6 位数的随机码
      */
     public int sendAuthenticationCode(final String phoneNumber) {
+        Utils.checkPhoneNumber(phoneNumber);
+
         final int code = Utils.randomCode();
         send(this.authenticationSmsTemplateBuilder.addTemplateParam("code", String.valueOf(code)).build(), phoneNumber);
         return code;
