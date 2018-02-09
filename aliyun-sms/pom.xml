@@ -22,8 +22,8 @@
         <relativePath>../</relativePath>
     </parent>
     <modelVersion>4.0.0</modelVersion>
-    <artifactId>aliyun-sms-sdk</artifactId>
-    <name>aliyun-sms-sdk</name>
+    <artifactId>aliyun-sms</artifactId>
+    <name>aliyun-sms</name>
 
     <dependencies>
         <dependency>
@@ -48,7 +48,7 @@
         </dependency>
     </dependencies>
 
-    <description>Aliyun SMS SDK</description>
+    <description>Aliyun SMS</description>
     <url>https://github.com/cn-src/aliyun-sms</url>
     <licenses>
         <license>

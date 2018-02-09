@@ -8,7 +8,7 @@
     <packaging>pom</packaging>
     <version>1.0.0-SNAPSHOT</version>
     <modules>
-        <module>aliyun-sms-sdk</module>
+        <module>aliyun-sms</module>
         <module>aliyun-spring-boot-starter-sms</module>
     </modules>
     <name>aliyun-sms-parent</name>

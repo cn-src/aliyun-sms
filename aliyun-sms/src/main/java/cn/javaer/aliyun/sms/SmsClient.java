@@ -25,7 +25,6 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.util.Arrays;
-import java.util.Random;
 import java.util.stream.Collectors;
 
 /**
@@ -34,7 +33,6 @@ import java.util.stream.Collectors;
 public class SmsClient {
 
     private static final String SUCCESS_CODE = "OK";
-    private static final Random RANDOM = new Random();
     private static final String PHONE_NUMBER_REGEX = "((13[0-9])|(14[5|7])|(15([0-3]|[5-9]))|(18[0,5-9]))\\d{8}";
     private final IAcsClient acsClient;
     private final String product = "Dysmsapi";
@@ -62,30 +60,6 @@ public class SmsClient {
     }
 
     /**
-     * 生成随机数.
-     *
-     * @param startInclusive 随机范围起始数字（包含）
-     * @param endExclusive 随机范围结束数字（不包含）
-     *
-     * @return 随机数
-     */
-    private static int nextInt(final int startInclusive, final int endExclusive) {
-
-        if (endExclusive < startInclusive) {
-            throw new IllegalArgumentException("Start value must be smaller or equal to end value.");
-        }
-        if (startInclusive < 0) {
-            throw new IllegalArgumentException("Both range values must be non-negative.");
-        }
-
-        if (startInclusive == endExclusive) {
-            return startInclusive;
-        }
-
-        return startInclusive + RANDOM.nextInt(endExclusive - startInclusive);
-    }
-
-    /**
      * 发送身份验证验证码.
      *
      * @param phoneNumber 中国手机号码
@@ -93,7 +67,7 @@ public class SmsClient {
      * @return 6 位数的随机码
      */
     public int sendAuthenticationCode(final String phoneNumber) {
-        final int code = nextInt(100000, 1000000);
+        final int code = Utils.nextInt(100000, 1000000);
         send(this.authenticationSmsTemplateBuilder.addTemplateParam("code", String.valueOf(code)).build(), phoneNumber);
         return code;
     }
