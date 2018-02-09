@@ -13,6 +13,7 @@
 
 package cn.javaer.aliyun.spring.boot.autoconfigure.sms;
 
+import cn.javaer.aliyun.sms.SmsTemplate;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.boot.context.properties.ConfigurationProperties;
@@ -25,13 +26,9 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 @ConfigurationProperties(prefix = "aliyun.sms")
 public class AliyunSmsProperties {
 
-    private final String product = "Dysmsapi";
-    private final String domain = "dysmsapi.aliyuncs.com";
-    private final String region = "cn-hangzhou";
-
     private String accessKeyId;
     private String accessKeySecret;
     private String signName;
-    private String authenticationTemplateCode;
-
+    private SmsTemplate authentication;
+    
 }
