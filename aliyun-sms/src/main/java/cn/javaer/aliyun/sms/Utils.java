@@ -16,22 +16,12 @@ class Utils {
     private static final String PHONE_NUMBER_REGEX = "((13[0-9])|(14[5|7])|(15([0-3]|[5-9]))|(18[0,5-9]))\\d{8}";
 
     /**
-     * 生成随机数.
-     *
-     * @param startInclusive 随机范围起始数字（包含）
-     * @param endExclusive 随机范围结束数字（不包含）
+     * 生成随机验证码.
      *
      * @return 随机数
      */
-    static int nextInt(final int startInclusive, final int endExclusive) {
-        checkArgument(endExclusive >= startInclusive, "Start value must be smaller or equal to end value.");
-        checkArgument(startInclusive >= 0, "Both range values must be non-negative.");
-
-        if (startInclusive == endExclusive) {
-            return startInclusive;
-        }
-
-        return startInclusive + RANDOM.nextInt(endExclusive - startInclusive);
+    static int randomCode() {
+        return 100_000 + RANDOM.nextInt(1_000_000 - 100_000);
     }
 
     /**
