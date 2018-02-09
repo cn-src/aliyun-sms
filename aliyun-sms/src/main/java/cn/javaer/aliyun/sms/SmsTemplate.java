@@ -22,6 +22,14 @@ public class SmsTemplate {
     private Map<String, String> templateParam;
 
     public static class Builder {
+        /**
+         * 添加短信模板参数.
+         *
+         * @param key the key
+         * @param value the value
+         *
+         * @return this
+         */
         public Builder addTemplateParam(final String key, final String value) {
             this.templateParam.put(key, value);
             return this;

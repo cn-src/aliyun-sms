@@ -30,7 +30,6 @@ import java.util.stream.Collectors;
  */
 public class SmsClient {
 
-    private static final String PHONE_NUMBER_REGEX = "((13[0-9])|(14[5|7])|(15([0-3]|[5-9]))|(18[0,5-9]))\\d{8}";
     private final IAcsClient acsClient;
     private final String product = "Dysmsapi";
     private final String domain = "dysmsapi.aliyuncs.com";
@@ -51,7 +50,7 @@ public class SmsClient {
 
         final IClientProfile clientProfile = DefaultProfile.getProfile(
                 this.region, accessKeyId, accessKeySecret);
-        Utils.tryFun(() -> DefaultProfile.addEndpoint(this.endpointName, this.region, this.product, this.domain));
+        Utils.tryChecked(() -> DefaultProfile.addEndpoint(this.endpointName, this.region, this.product, this.domain));
         this.acsClient = new DefaultAcsClient(clientProfile);
     }
 
@@ -74,9 +73,9 @@ public class SmsClient {
         request.setPhoneNumbers(Arrays.stream(phoneNumbers).collect(Collectors.joining(",")));
         request.setSignName(smsTemplate.getSignName());
         request.setTemplateCode(smsTemplate.getTemplateCode());
-        final String param = Utils.tryFun(() -> this.objectMapper.writeValueAsString(smsTemplate.getTemplateParam()));
+        final String param = Utils.tryChecked(() -> this.objectMapper.writeValueAsString(smsTemplate.getTemplateParam()));
         request.setTemplateParam(param);
-        final SendSmsResponse response = Utils.tryFun(() -> this.acsClient.getAcsResponse(request));
+        final SendSmsResponse response = Utils.tryChecked(() -> this.acsClient.getAcsResponse(request));
         Utils.checkSmsResponse(response);
     }
 
