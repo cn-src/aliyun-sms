@@ -16,6 +16,7 @@ package cn.javaer.aliyun.spring.boot.autoconfigure.sms;
 import cn.javaer.aliyun.sms.SmsTemplate;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.beans.factory.InitializingBean;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
 /**
@@ -24,11 +25,17 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 @Getter
 @Setter
 @ConfigurationProperties(prefix = "aliyun.sms")
-public class AliyunSmsProperties {
+public class AliyunSmsProperties implements InitializingBean {
 
     private String accessKeyId;
     private String accessKeySecret;
     private String signName;
     private SmsTemplate authentication;
-    
+
+    @Override
+    public void afterPropertiesSet() throws Exception {
+        if (null != this.authentication && this.authentication.getSignName() == null) {
+            this.authentication.setSignName(this.signName);
+        }
+    }
 }
