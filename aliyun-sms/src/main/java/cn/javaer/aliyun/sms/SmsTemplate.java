@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -31,6 +32,9 @@ public class SmsTemplate {
          * @return this
          */
         public Builder addTemplateParam(final String key, final String value) {
+            if (null == this.templateParam) {
+                this.templateParam = new HashMap<>(3);
+            }
             this.templateParam.put(key, value);
             return this;
         }
