@@ -18,9 +18,11 @@ public class SmsClientDemo {
 
     @Test
     public void sendAuthenticationCode() {
+        final String signName = System.getenv("aliyun.sms.authentication.signName");
+        final String templateCode = System.getenv("aliyun.sms.authentication.templateCode");
         final SmsTemplate authenticationSmsTemplate = SmsTemplate.builder()
-                .templateCode(System.getenv("aliyun.sms.authentication.signName"))
-                .signName(System.getenv("aliyun.sms.authentication.templateCode")).build();
+                .templateCode(templateCode)
+                .signName(signName).build();
         this.smsClient.setAuthenticationSmsTemplate(authenticationSmsTemplate);
         this.smsClient.sendAuthenticationCode(System.getenv("aliyun.sms.authentication.phoneNumber"));
     }
