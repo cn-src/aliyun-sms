@@ -22,7 +22,12 @@ import com.aliyuncs.profile.DefaultProfile;
 import com.aliyuncs.profile.IClientProfile;
 
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.Map;
+import java.util.Objects;
 import java.util.stream.Collectors;
+
+import static cn.javaer.aliyun.sms.Utils.*;
 
 /**
  * @author zhangpeng
@@ -34,7 +39,7 @@ public class SmsClient {
     private final String domain = "dysmsapi.aliyuncs.com";
     private final String region = "cn-hangzhou";
     private final String endpointName = "cn-hangzhou";
-    private SmsTemplate.Builder authenticationSmsTemplateBuilder;
+    private final Map<String, SmsTemplate> smsTemplates;
 
     /**
      * Instantiates a new SmsClient.
@@ -43,42 +48,59 @@ public class SmsClient {
      * @param accessKeySecret 阿里云短信 accessKeySecret
      */
     public SmsClient(final String accessKeyId, final String accessKeySecret) {
-        Utils.checkNotEmpty(accessKeyId, "'accessKeyId' must be not empty");
-        Utils.checkNotEmpty(accessKeySecret, "'accessKeySecret' must be not empty");
+        this(accessKeyId, accessKeySecret, Collections.emptyMap());
+    }
+
+    public SmsClient(final String accessKeyId, final String accessKeySecret, final Map<String, SmsTemplate> smsTemplates) {
+        checkNotEmpty(accessKeyId, "'accessKeyId' must be not empty");
+        checkNotEmpty(accessKeySecret, "'accessKeySecret' must be not empty");
 
         final IClientProfile clientProfile = DefaultProfile.getProfile(
                 this.region, accessKeyId, accessKeySecret);
         Utils.tryChecked(() -> DefaultProfile.addEndpoint(this.endpointName, this.region, this.product, this.domain));
         this.acsClient = new DefaultAcsClient(clientProfile);
+        this.smsTemplates = smsTemplates;
     }
 
     /**
-     * 发送身份验证验证码.
+     * 发送验证码.
      *
      * @param phoneNumber 手机号码(中国)
      *
      * @return 6 位数的随机码
      */
-    public int sendAuthenticationCode(final String phoneNumber) {
-        Utils.checkPhoneNumber(phoneNumber);
+    public int sendVerificationCode(final String smsTemplateKey, final String phoneNumber) {
+        checkPhoneNumber(phoneNumber);
 
+        final SmsTemplate smsTemplate = this.smsTemplates.get(smsTemplateKey);
         final int code = Utils.randomCode();
-        send(this.authenticationSmsTemplateBuilder.addTemplateParam("code", String.valueOf(code)).build(), phoneNumber);
+        smsTemplate.setTemplateParam(Collections.singletonMap("code", String.valueOf(code)));
+        smsTemplate.setPhoneNumbers(Collections.singletonList(phoneNumber));
+        send(smsTemplate);
         return code;
     }
 
-    public void send(final SmsTemplate smsTemplate, final String... phoneNumbers) {
+    public void send(final String smsTemplateKey) {
+        send(this.smsTemplates.get(smsTemplateKey));
+    }
+
+    public void send(final String smsTemplateKey, final String... phoneNumbers) {
+        final SmsTemplate smsTemplate = this.smsTemplates.get(smsTemplateKey);
+        smsTemplate.setPhoneNumbers(Arrays.asList(phoneNumbers));
+        send(smsTemplate);
+    }
+
+    public void send(final SmsTemplate smsTemplate) {
+        Objects.requireNonNull(smsTemplate);
+
         final SendSmsRequest request = new SendSmsRequest();
         request.setMethod(MethodType.POST);
-        request.setPhoneNumbers(Arrays.stream(phoneNumbers).collect(Collectors.joining(",")));
+        request.setPhoneNumbers(smsTemplate.getPhoneNumbers().stream().collect(Collectors.joining(",")));
         request.setSignName(smsTemplate.getSignName());
         request.setTemplateCode(smsTemplate.getTemplateCode());
         request.setTemplateParam(Utils.toJsonStr(smsTemplate.getTemplateParam()));
         final SendSmsResponse response = Utils.tryChecked(() -> this.acsClient.getAcsResponse(request));
-        Utils.checkSmsResponse(response);
+        checkSmsResponse(response);
     }
 
-    public void setAuthenticationSmsTemplate(final SmsTemplate authenticationSmsTemplate) {
-        this.authenticationSmsTemplateBuilder = authenticationSmsTemplate.toBuilder();
-    }
 }

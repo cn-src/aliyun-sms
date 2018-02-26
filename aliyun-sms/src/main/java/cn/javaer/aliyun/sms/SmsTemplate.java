@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -21,6 +22,7 @@ public class SmsTemplate {
     private String signName;
     private String templateCode;
     private Map<String, String> templateParam;
+    private List<String> phoneNumbers;
 
     public static class Builder {
         /**

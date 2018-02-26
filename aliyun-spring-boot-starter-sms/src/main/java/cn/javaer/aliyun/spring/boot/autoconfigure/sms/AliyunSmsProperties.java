@@ -19,6 +19,8 @@ import lombok.Setter;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
+import java.util.Map;
+
 /**
  * @author zhangpeng
  */
@@ -30,12 +32,16 @@ public class AliyunSmsProperties implements InitializingBean {
     private String accessKeyId;
     private String accessKeySecret;
     private String signName;
-    private SmsTemplate authentication;
+    private Map<String, SmsTemplate> smsTemplates;
 
     @Override
     public void afterPropertiesSet() throws Exception {
-        if (null != this.authentication && this.authentication.getSignName() == null) {
-            this.authentication.setSignName(this.signName);
+        if (null != this.smsTemplates) {
+            for (final SmsTemplate smsTemplate : this.smsTemplates.values()) {
+                if (null == smsTemplate.getSignName()) {
+                    smsTemplate.setSignName(this.signName);
+                }
+            }
         }
     }
 }

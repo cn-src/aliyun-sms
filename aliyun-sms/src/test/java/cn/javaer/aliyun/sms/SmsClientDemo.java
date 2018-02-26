@@ -3,6 +3,8 @@ package cn.javaer.aliyun.sms;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.Collections;
+
 /**
  * @author zhangpeng
  */
@@ -20,10 +22,13 @@ public class SmsClientDemo {
     public void sendAuthenticationCode() {
         final String signName = System.getenv("aliyun.sms.authentication.signName");
         final String templateCode = System.getenv("aliyun.sms.authentication.templateCode");
-        final SmsTemplate authenticationSmsTemplate = SmsTemplate.builder()
+        final SmsTemplate smsTemplate = SmsTemplate.builder()
+                .signName(signName)
                 .templateCode(templateCode)
-                .signName(signName).build();
-        this.smsClient.setAuthenticationSmsTemplate(authenticationSmsTemplate);
-        this.smsClient.sendAuthenticationCode(System.getenv("aliyun.sms.authentication.phoneNumber"));
+                .addTemplateParam("code", "123456")
+                .phoneNumbers(Collections.singletonList(System.getenv("aliyun.sms.authentication.phoneNumber")))
+                .build();
+
+        this.smsClient.send(smsTemplate);
     }
 }
