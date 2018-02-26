@@ -88,18 +88,6 @@ class Utils {
     }
 
     /**
-     * 校验布尔表达式必须为 true.
-     *
-     * @param expression the boolean expression
-     * @param message the message
-     */
-    static void checkArgument(final boolean expression, final String message) {
-        if (!expression) {
-            throw new IllegalArgumentException(message);
-        }
-    }
-
-    /**
      * 处理受检查异常.
      *
      * @param <T> the type parameter
