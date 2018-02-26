@@ -32,12 +32,12 @@ public class AliyunSmsProperties implements InitializingBean {
     private String accessKeyId;
     private String accessKeySecret;
     private String signName;
-    private Map<String, SmsTemplate> smsTemplates;
+    private Map<String, SmsTemplate> templates;
 
     @Override
     public void afterPropertiesSet() throws Exception {
-        if (null != this.smsTemplates) {
-            for (final SmsTemplate smsTemplate : this.smsTemplates.values()) {
+        if (null != this.templates) {
+            for (final SmsTemplate smsTemplate : this.templates.values()) {
                 if (null == smsTemplate.getSignName()) {
                     smsTemplate.setSignName(this.signName);
                 }

@@ -36,13 +36,13 @@ public class AliyunSmsAutoConfiguration {
     @Bean
     @ConditionalOnMissingBean
     public SmsClient smsClient() {
-        if (this.smsProperties.getSmsTemplates() == null) {
+        if (this.smsProperties.getTemplates() == null) {
             return new SmsClient(this.smsProperties.getAccessKeyId(), this.smsProperties.getAccessKeySecret());
         } else {
             return new SmsClient(
                     this.smsProperties.getAccessKeyId(),
                     this.smsProperties.getAccessKeySecret(),
-                    this.smsProperties.getSmsTemplates());
+                    this.smsProperties.getTemplates());
         }
     }
 }
