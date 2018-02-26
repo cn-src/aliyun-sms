@@ -13,8 +13,36 @@
 
 package cn.javaer.aliyun.spring.boot.autoconfigure.sms;
 
+import cn.javaer.aliyun.sms.SmsClient;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+
 /**
  * @author zhangpeng
  */
+@Configuration
+@ConditionalOnClass(name = "com.aliyuncs.IAcsClient")
+@EnableConfigurationProperties(AliyunSmsProperties.class)
 public class AliyunSmsAutoConfiguration {
+    private final AliyunSmsProperties smsProperties;
+
+    public AliyunSmsAutoConfiguration(final AliyunSmsProperties smsProperties) {
+        this.smsProperties = smsProperties;
+    }
+
+    @Bean
+    @ConditionalOnMissingBean
+    public SmsClient smsClient() {
+        if (this.smsProperties.getSmsTemplates() == null) {
+            return new SmsClient(this.smsProperties.getAccessKeyId(), this.smsProperties.getAccessKeySecret());
+        } else {
+            return new SmsClient(
+                    this.smsProperties.getAccessKeyId(),
+                    this.smsProperties.getAccessKeySecret(),
+                    this.smsProperties.getSmsTemplates());
+        }
+    }
 }
