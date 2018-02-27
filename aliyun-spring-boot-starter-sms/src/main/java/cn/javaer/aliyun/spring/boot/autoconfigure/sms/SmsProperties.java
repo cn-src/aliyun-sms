@@ -27,7 +27,7 @@ import java.util.Map;
 @Getter
 @Setter
 @ConfigurationProperties(prefix = "aliyun.sms")
-public class AliyunSmsProperties implements InitializingBean {
+public class SmsProperties implements InitializingBean {
 
     private String accessKeyId;
     private String accessKeySecret;

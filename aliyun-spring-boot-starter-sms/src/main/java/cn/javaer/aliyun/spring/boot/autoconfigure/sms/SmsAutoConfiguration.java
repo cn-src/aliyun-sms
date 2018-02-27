@@ -25,11 +25,11 @@ import org.springframework.context.annotation.Configuration;
  */
 @Configuration
 @ConditionalOnClass(name = "com.aliyuncs.IAcsClient")
-@EnableConfigurationProperties(AliyunSmsProperties.class)
-public class AliyunSmsAutoConfiguration {
-    private final AliyunSmsProperties smsProperties;
+@EnableConfigurationProperties(SmsProperties.class)
+public class SmsAutoConfiguration {
+    private final SmsProperties smsProperties;
 
-    public AliyunSmsAutoConfiguration(final AliyunSmsProperties smsProperties) {
+    public SmsAutoConfiguration(final SmsProperties smsProperties) {
         this.smsProperties = smsProperties;
     }
 
