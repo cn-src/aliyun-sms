@@ -22,6 +22,8 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import java.util.Map;
 
 /**
+ * 阿里云 SMS 配置属性.
+ *
  * @author zhangpeng
  */
 @Getter

@@ -27,9 +27,14 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
-import static cn.javaer.aliyun.sms.Utils.*;
+import static cn.javaer.aliyun.sms.Utils.checkNotEmpty;
+import static cn.javaer.aliyun.sms.Utils.checkPhoneNumber;
+import static cn.javaer.aliyun.sms.Utils.checkSmsResponse;
+
 
 /**
+ * 阿里云 SMS 客户端.
+ *
  * @author zhangpeng
  */
 public class SmsClient {
@@ -58,7 +63,9 @@ public class SmsClient {
      * @param accessKeySecret 阿里云短信 accessKeySecret
      * @param smsTemplates 预置短信模板
      */
-    public SmsClient(final String accessKeyId, final String accessKeySecret, final Map<String, SmsTemplate> smsTemplates) {
+    public SmsClient(final String accessKeyId,
+                     final String accessKeySecret,
+                     final Map<String, SmsTemplate> smsTemplates) {
         checkNotEmpty(accessKeyId, "'accessKeyId' must be not empty");
         checkNotEmpty(accessKeySecret, "'accessKeySecret' must be not empty");
 

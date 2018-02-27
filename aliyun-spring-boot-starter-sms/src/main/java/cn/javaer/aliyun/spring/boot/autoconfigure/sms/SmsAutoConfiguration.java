@@ -21,6 +21,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 /**
+ * 阿里云 SMS 自动配置.
+ *
  * @author zhangpeng
  */
 @Configuration
@@ -33,6 +35,11 @@ public class SmsAutoConfiguration {
         this.smsProperties = smsProperties;
     }
 
+    /**
+     * Configuration SmsClient bean.
+     *
+     * @return the sms client
+     */
     @Bean
     @ConditionalOnMissingBean
     public SmsClient smsClient() {
