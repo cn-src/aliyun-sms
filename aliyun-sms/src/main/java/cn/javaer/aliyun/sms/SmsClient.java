@@ -71,8 +71,9 @@ public class SmsClient {
      */
     public int sendVerificationCode(final String smsTemplateKey, final String phoneNumber) {
         checkPhoneNumber(phoneNumber);
-
         final SmsTemplate smsTemplate = this.smsTemplates.get(smsTemplateKey);
+        Objects.requireNonNull(smsTemplate, () -> "SmsTemplate must be not null, key:" + smsTemplateKey);
+
         final int code = Utils.randomCode();
         smsTemplate.setTemplateParam(Collections.singletonMap("code", String.valueOf(code)));
         smsTemplate.setPhoneNumbers(Collections.singletonList(phoneNumber));
@@ -81,11 +82,16 @@ public class SmsClient {
     }
 
     public void send(final String smsTemplateKey) {
-        send(this.smsTemplates.get(smsTemplateKey));
+        final SmsTemplate smsTemplate = this.smsTemplates.get(smsTemplateKey);
+        Objects.requireNonNull(smsTemplate, () -> "SmsTemplate must be not null, key:" + smsTemplateKey);
+
+        send(smsTemplate);
     }
 
     public void send(final String smsTemplateKey, final String... phoneNumbers) {
         final SmsTemplate smsTemplate = this.smsTemplates.get(smsTemplateKey);
+        Objects.requireNonNull(smsTemplate, () -> "SmsTemplate must be not null, key:" + smsTemplateKey);
+
         smsTemplate.setPhoneNumbers(Arrays.asList(phoneNumbers));
         send(smsTemplate);
     }
