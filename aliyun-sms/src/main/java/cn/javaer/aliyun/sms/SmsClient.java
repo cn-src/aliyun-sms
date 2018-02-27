@@ -51,6 +51,13 @@ public class SmsClient {
         this(accessKeyId, accessKeySecret, Collections.emptyMap());
     }
 
+    /**
+     * Instantiates a new SmsClient.
+     *
+     * @param accessKeyId 阿里云短信 accessKeyId
+     * @param accessKeySecret 阿里云短信 accessKeySecret
+     * @param smsTemplates 预置短信模板
+     */
     public SmsClient(final String accessKeyId, final String accessKeySecret, final Map<String, SmsTemplate> smsTemplates) {
         checkNotEmpty(accessKeyId, "'accessKeyId' must be not empty");
         checkNotEmpty(accessKeySecret, "'accessKeySecret' must be not empty");
@@ -63,7 +70,7 @@ public class SmsClient {
     }
 
     /**
-     * 发送验证码.
+     * 发送短信验证码.
      *
      * @param phoneNumber 手机号码(中国)
      *
@@ -81,6 +88,11 @@ public class SmsClient {
         return code;
     }
 
+    /**
+     * 发送短信.
+     *
+     * @param smsTemplateKey 预置短信模板 key
+     */
     public void send(final String smsTemplateKey) {
         final SmsTemplate smsTemplate = this.smsTemplates.get(smsTemplateKey);
         Objects.requireNonNull(smsTemplate, () -> "SmsTemplate must be not null, key:" + smsTemplateKey);
@@ -88,6 +100,12 @@ public class SmsClient {
         send(smsTemplate);
     }
 
+    /**
+     * 发送短信.
+     *
+     * @param smsTemplateKey 预置短信模板 key
+     * @param phoneNumbers 手机号码，优先于预置短信模板中配置的手机号码
+     */
     public void send(final String smsTemplateKey, final String... phoneNumbers) {
         final SmsTemplate smsTemplate = this.smsTemplates.get(smsTemplateKey);
         Objects.requireNonNull(smsTemplate, () -> "SmsTemplate must be not null, key:" + smsTemplateKey);
@@ -96,6 +114,11 @@ public class SmsClient {
         send(smsTemplate);
     }
 
+    /**
+     * 发送短信.
+     *
+     * @param smsTemplate 短信模板
+     */
     public void send(final SmsTemplate smsTemplate) {
         Objects.requireNonNull(smsTemplate);
 
