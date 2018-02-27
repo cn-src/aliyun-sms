@@ -1,6 +1,7 @@
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
-[![Maven Central](https://maven-badges.herokuapp.com/maven-central/cn.javaer/aliyun-sms/badge.svg)](https://maven-badges.herokuapp.com/maven-central/cn.javaer/aliyun-sms)
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/cn.javaer/aliyun-sms-parent/badge.svg)](https://maven-badges.herokuapp.com/maven-central/cn.javaer/aliyun-oss)
 
+[![Libraries.io for GitHub](https://img.shields.io/librariesio/github/cn-src/aliyun-oss-parent.svg)](https://libraries.io/github/cn-src/aliyun-oss-parent)
 # aliyun-sms
 阿里云 SMS 短信 Java SDK 封装
 
