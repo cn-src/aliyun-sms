@@ -37,7 +37,17 @@ smsClient.send(smsTemplate);
 </dependency>
 ```
 
-2. 样例
+2. 配置
+
+```
+aliyun.sms.accessKeyId=
+aliyun.sms.accessKeySecret=
+aliyun.sms.signName=
+aliyun.sms.templates.key1.templateCode=
+```
+
+3. 样例
+
 ```java
     @Autowired
     private SmsClient smsClient;
