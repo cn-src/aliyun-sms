@@ -9,7 +9,7 @@
 1. 添加依赖
 ``` xml
 <dependency>
-    <groupId>cn.javaer.aliyun</groupId>
+    <groupId>cn.javaer</groupId>
     <artifactId>aliyun-sms</artifactId>
     <version>1.0.0</version>
 </dependency>
@@ -31,7 +31,7 @@ smsClient.send(smsTemplate);
 1. 添加依赖
 ``` xml
 <dependency>
-    <groupId>cn.javaer.aliyun</groupId>
+    <groupId>cn.javaer</groupId>
     <artifactId>aliyun-spring-boot-starter-sms</artifactId>
     <version>1.0.0</version>
 </dependency>
