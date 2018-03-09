@@ -15,7 +15,7 @@
 
     <dependencies>
         <dependency>
-            <groupId>cn.javaer</groupId>
+            <groupId>cn.javaer.aliyun</groupId>
             <artifactId>aliyun-sms</artifactId>
         </dependency>
         <dependency>
