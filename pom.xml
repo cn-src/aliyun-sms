@@ -55,12 +55,12 @@
             </dependency>
 
             <dependency>
-                <groupId>cn.javaer</groupId>
+                <groupId>cn.javaer.aliyun</groupId>
                 <artifactId>aliyun-sms</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
-                <groupId>cn.javaer</groupId>
+                <groupId>cn.javaer.aliyun</groupId>
                 <artifactId>aliyun-spring-boot-starter-sms</artifactId>
                 <version>${project.version}</version>
             </dependency>
