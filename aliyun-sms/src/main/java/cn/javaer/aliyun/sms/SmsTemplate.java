@@ -36,10 +36,11 @@ public class SmsTemplate {
          * @return this
          */
         public Builder addTemplateParam(final String key, final String value) {
-            if (null == this.templateParam) {
-                this.templateParam = new HashMap<>(3);
+            Map<String, String> params = this.templateParam;
+            if (null == params) {
+                params = new HashMap<>(3);
             }
-            this.templateParam.put(key, value);
+            params.put(key, value);
             return this;
         }
     }
