@@ -3,7 +3,7 @@ package cn.javaer.aliyun.sms;
 import com.aliyuncs.dysmsapi.model.v20170525.SendSmsResponse;
 
 import java.util.Map;
-import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
 
 /**
  * 工具类，内部使用，作为库自身尽可能减少对第三方库的依赖.
@@ -13,7 +13,6 @@ import java.util.Random;
 class Utils {
 
     private static final String SUCCESS_CODE = "OK";
-    private static final Random RANDOM = new Random();
     private static final String PHONE_NUMBER_REGEX = "((13[0-9])|(14[5|7])|(15([0-3]|[5-9]))|(18[0,5-9]))\\d{8}";
 
     /**
@@ -22,7 +21,7 @@ class Utils {
      * @return 随机数
      */
     static int randomCode() {
-        return 100_000 + RANDOM.nextInt(1_000_000 - 100_000);
+        return 100_000 + ThreadLocalRandom.current().nextInt(1_000_000 - 100_000);
     }
 
     /**
@@ -98,10 +97,12 @@ class Utils {
     static <T> T tryChecked(final CheckedSupplier<T> fun) {
         try {
             return fun.get();
-        } catch (final Exception e) {
+        }
+        catch (final Exception e) {
             if (e instanceof RuntimeException) {
                 throw (RuntimeException) e;
-            } else {
+            }
+            else {
                 throw new SmsException(e);
             }
         }
@@ -115,10 +116,12 @@ class Utils {
     static void tryChecked(final CheckedVoid fun) {
         try {
             fun.call();
-        } catch (final Exception e) {
+        }
+        catch (final Exception e) {
             if (e instanceof RuntimeException) {
                 throw (RuntimeException) e;
-            } else {
+            }
+            else {
                 throw new SmsException(e);
             }
         }
