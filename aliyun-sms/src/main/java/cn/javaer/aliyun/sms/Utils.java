@@ -55,9 +55,6 @@ class Utils {
      * @param template the SmsTemplate
      */
     static void checkSmsTemplate(final SmsTemplate template) {
-        if (null == template) {
-            throw new IllegalArgumentException("SmsTemplate must be not null");
-        }
         if (null == template.getSignName() || template.getSignName().isEmpty()) {
             throw new IllegalArgumentException("SmsTemplate signName must be not empty");
         }
