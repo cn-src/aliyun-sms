@@ -30,6 +30,7 @@ import java.util.stream.Collectors;
 import static cn.javaer.aliyun.sms.Utils.checkNotEmpty;
 import static cn.javaer.aliyun.sms.Utils.checkPhoneNumber;
 import static cn.javaer.aliyun.sms.Utils.checkSmsResponse;
+import static cn.javaer.aliyun.sms.Utils.checkSmsTemplate;
 
 
 /**
@@ -128,6 +129,7 @@ public class SmsClient {
      */
     public void send(final SmsTemplate smsTemplate) {
         Objects.requireNonNull(smsTemplate);
+        checkSmsTemplate(smsTemplate);
 
         final SendSmsRequest request = new SendSmsRequest();
         request.setMethod(MethodType.POST);
