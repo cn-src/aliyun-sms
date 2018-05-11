@@ -1,5 +1,5 @@
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
-![Maven Central](https://img.shields.io/maven-central/v/cn.javaer/aliyun-sms.svg)
+![Maven Central](https://img.shields.io/maven-central/v/cn.javaer.aliyun/aliyun-sms.svg)
 [![Build Status](https://travis-ci.org/cn-src/aliyun-sms.svg?branch=master)](https://travis-ci.org/cn-src/aliyun-sms)
 [![Libraries.io for GitHub](https://img.shields.io/librariesio/github/cn-src/aliyun-sms.svg)](https://libraries.io/github/cn-src/aliyun-sms)
 # aliyun-sms
@@ -9,9 +9,9 @@
 1. 添加依赖
 ``` xml
 <dependency>
-    <groupId>cn.javaer</groupId>
+    <groupId>cn.javaer.aliyun</groupId>
     <artifactId>aliyun-sms</artifactId>
-    <version>1.0.0</version>
+    <version>1.0.1</version>
 </dependency>
 ```
 
@@ -33,7 +33,7 @@ smsClient.send(smsTemplate);
 <dependency>
     <groupId>cn.javaer</groupId>
     <artifactId>aliyun-spring-boot-starter-sms</artifactId>
-    <version>1.0.0</version>
+    <version>1.0.1</version>
 </dependency>
 ```
 
