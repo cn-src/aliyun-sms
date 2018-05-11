@@ -50,6 +50,27 @@ class Utils {
     }
 
     /**
+     * 校验 SmsTemplate.
+     *
+     * @param template the SmsTemplate
+     */
+    static void checkSmsTemplate(final SmsTemplate template) {
+        if (null == template) {
+            throw new IllegalArgumentException("SmsTemplate must be not null");
+        }
+        if (null == template.getSignName() || template.getSignName().isEmpty()) {
+            throw new IllegalArgumentException("SmsTemplate signName must be not empty");
+        }
+        if (null == template.getTemplateCode() || template.getTemplateCode().isEmpty()) {
+            throw new IllegalArgumentException("SmsTemplate templateCode must be not empty");
+
+        }
+        if (null == template.getPhoneNumbers() || template.getPhoneNumbers().isEmpty()) {
+            throw new IllegalArgumentException("SmsTemplate phoneNumbers must be not empty");
+        }
+    }
+
+    /**
      * 校验 SendSmsResponse 状态.
      *
      * @param response the SendSmsResponse
