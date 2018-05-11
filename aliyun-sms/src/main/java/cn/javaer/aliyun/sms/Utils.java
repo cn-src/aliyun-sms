@@ -32,6 +32,10 @@ class Utils {
      * @return the json string
      */
     static String toJsonStr(final Map<String, String> map) {
+        if (null == map || map.isEmpty()) {
+            return null;
+        }
+
         final StringBuilder sb = new StringBuilder();
         sb.append('{');
         for (final Map.Entry<String, String> entry : map.entrySet()) {
