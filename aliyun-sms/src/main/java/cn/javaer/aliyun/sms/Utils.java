@@ -13,7 +13,7 @@ import java.util.concurrent.ThreadLocalRandom;
 class Utils {
 
     private static final String SUCCESS_CODE = "OK";
-    private static final String PHONE_NUMBER_REGEX = "((13[0-9])|(14[5|7])|(15([0-3]|[5-9]))|(18[0,5-9]))\\d{8}";
+    private static final String PHONE_NUMBER_REGEX = "1\\d{10}";
 
     /**
      * 生成随机验证码.
