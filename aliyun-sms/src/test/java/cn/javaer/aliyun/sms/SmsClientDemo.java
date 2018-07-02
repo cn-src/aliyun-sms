@@ -6,7 +6,7 @@ import org.junit.Test;
 import java.util.Collections;
 
 /**
- * @author zhangpeng
+ * @author cn-src
  */
 public class SmsClientDemo {
     private SmsClient smsClient;

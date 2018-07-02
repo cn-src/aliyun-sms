@@ -23,7 +23,7 @@ import org.springframework.context.annotation.Configuration;
 /**
  * 阿里云 SMS 自动配置.
  *
- * @author zhangpeng
+ * @author cn-src
  */
 @Configuration
 @ConditionalOnClass(name = "com.aliyuncs.IAcsClient")

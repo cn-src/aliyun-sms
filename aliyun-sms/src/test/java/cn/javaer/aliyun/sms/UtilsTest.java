@@ -8,7 +8,7 @@ import java.util.Map;
 import static org.junit.Assert.assertEquals;
 
 /**
- * @author zhangpeng
+ * @author cn-src
  */
 public class UtilsTest {
 

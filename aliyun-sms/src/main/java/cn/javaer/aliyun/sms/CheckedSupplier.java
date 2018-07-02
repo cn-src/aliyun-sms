@@ -5,7 +5,7 @@ package cn.javaer.aliyun.sms;
  *
  * @param <T> the type parameter
  *
- * @author zhangpeng
+ * @author cn-src
  */
 @FunctionalInterface
 interface CheckedSupplier<T> {

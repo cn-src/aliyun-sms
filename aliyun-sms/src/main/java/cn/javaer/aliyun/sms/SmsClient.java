@@ -36,7 +36,7 @@ import static cn.javaer.aliyun.sms.Utils.checkSmsTemplate;
 /**
  * 阿里云 SMS 客户端.
  *
- * @author zhangpeng
+ * @author cn-src
  */
 public class SmsClient {
 

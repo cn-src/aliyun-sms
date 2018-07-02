@@ -8,7 +8,7 @@ import java.util.concurrent.ThreadLocalRandom;
 /**
  * 工具类，内部使用，作为库自身尽可能减少对第三方库的依赖.
  *
- * @author zhangpeng
+ * @author cn-src
  */
 class Utils {
 

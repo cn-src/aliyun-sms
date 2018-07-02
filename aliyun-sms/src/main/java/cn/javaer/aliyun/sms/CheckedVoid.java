@@ -3,7 +3,7 @@ package cn.javaer.aliyun.sms;
 /**
  * The interface CheckedVoid.
  *
- * @author zhangpeng
+ * @author cn-src
  */
 @FunctionalInterface
 interface CheckedVoid {

@@ -16,7 +16,7 @@ package cn.javaer.aliyun.sms;
 /**
  * The type SmsException.
  *
- * @author zhangpeng
+ * @author cn-src
  */
 public class SmsException extends RuntimeException {
     /**

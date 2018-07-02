@@ -24,7 +24,7 @@ import java.util.Map;
 /**
  * 阿里云 SMS 配置属性.
  *
- * @author zhangpeng
+ * @author cn-src
  */
 @Getter
 @Setter
