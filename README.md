@@ -35,7 +35,7 @@ smsClient.send(smsTemplate);
 <dependency>
     <groupId>cn.javaer.aliyun</groupId>
     <artifactId>aliyun-spring-boot-starter-sms</artifactId>
-    <version>1.1.0</version>
+    <version>1.1.1</version>
 </dependency>
 ```
 
