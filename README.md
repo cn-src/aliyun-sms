@@ -13,7 +13,7 @@ Github & Issues: [https://github.com/cn-src/aliyun-sms](https://github.com/cn-sr
 <dependency>
     <groupId>cn.javaer.aliyun</groupId>
     <artifactId>aliyun-sms</artifactId>
-    <version>1.1.0</version>
+    <version>1.1.1</version>
 </dependency>
 ```
 
