@@ -25,7 +25,6 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.Map;
 import java.util.Objects;
-import java.util.stream.Collectors;
 
 import static cn.javaer.aliyun.sms.Utils.checkNotEmpty;
 import static cn.javaer.aliyun.sms.Utils.checkPhoneNumber;
@@ -133,7 +132,7 @@ public class SmsClient {
 
         final SendSmsRequest request = new SendSmsRequest();
         request.setMethod(MethodType.POST);
-        request.setPhoneNumbers(smsTemplate.getPhoneNumbers().stream().collect(Collectors.joining(",")));
+        request.setPhoneNumbers(String.join(",", smsTemplate.getPhoneNumbers()));
         request.setSignName(smsTemplate.getSignName());
         request.setTemplateCode(smsTemplate.getTemplateCode());
         request.setTemplateParam(Utils.toJsonStr(smsTemplate.getTemplateParam()));
