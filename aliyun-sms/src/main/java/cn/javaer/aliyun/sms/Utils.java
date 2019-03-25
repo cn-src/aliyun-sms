@@ -1,6 +1,7 @@
 package cn.javaer.aliyun.sms;
 
-import com.aliyuncs.dysmsapi.model.v20170525.SendSmsResponse;
+import com.aliyuncs.CommonResponse;
+import com.google.gson.Gson;
 
 import java.util.Map;
 import java.util.concurrent.ThreadLocalRandom;
@@ -76,12 +77,14 @@ class Utils {
      *
      * @param response the SendSmsResponse
      */
-    static void checkSmsResponse(final SendSmsResponse response) {
+    static void checkSmsResponse(final CommonResponse response) {
         if (null == response) {
             throw new SmsException("Response is null");
         }
-        if (!SUCCESS_CODE.equalsIgnoreCase(response.getCode())) {
-            throw new SmsException("Response code is '" + response.getCode() + "'");
+        final Gson gson = new Gson();
+        final Map<String, String> json = gson.fromJson(response.getData(), Map.class);
+        if (!SUCCESS_CODE.equalsIgnoreCase(json.get("Code"))) {
+            throw new SmsException("Response is '" + response.getData() + "'");
         }
     }
 

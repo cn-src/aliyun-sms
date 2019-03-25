@@ -13,10 +13,11 @@
 
 package cn.javaer.aliyun.sms;
 
+import com.aliyuncs.CommonRequest;
+import com.aliyuncs.CommonResponse;
 import com.aliyuncs.DefaultAcsClient;
 import com.aliyuncs.IAcsClient;
-import com.aliyuncs.dysmsapi.model.v20170525.SendSmsRequest;
-import com.aliyuncs.dysmsapi.model.v20170525.SendSmsResponse;
+import com.aliyuncs.exceptions.ClientException;
 import com.aliyuncs.http.MethodType;
 import com.aliyuncs.profile.DefaultProfile;
 import com.aliyuncs.profile.IClientProfile;
@@ -40,10 +41,6 @@ import static cn.javaer.aliyun.sms.Utils.checkSmsTemplate;
 public class SmsClient {
 
     private final IAcsClient acsClient;
-    private final String product = "Dysmsapi";
-    private final String domain = "dysmsapi.aliyuncs.com";
-    private final String region = "cn-hangzhou";
-    private final String endpointName = "cn-hangzhou";
     private final Map<String, SmsTemplate> smsTemplates;
 
     /**
@@ -70,8 +67,8 @@ public class SmsClient {
         checkNotEmpty(accessKeySecret, "'accessKeySecret' must be not empty");
 
         final IClientProfile clientProfile = DefaultProfile.getProfile(
-                this.region, accessKeyId, accessKeySecret);
-        Utils.tryChecked(() -> DefaultProfile.addEndpoint(this.endpointName, this.region, this.product, this.domain));
+                "default", accessKeyId, accessKeySecret);
+
         this.acsClient = new DefaultAcsClient(clientProfile);
         this.smsTemplates = smsTemplates;
     }
@@ -130,14 +127,22 @@ public class SmsClient {
         Objects.requireNonNull(smsTemplate);
         checkSmsTemplate(smsTemplate);
 
-        final SendSmsRequest request = new SendSmsRequest();
-        request.setMethod(MethodType.POST);
-        request.setPhoneNumbers(String.join(",", smsTemplate.getPhoneNumbers()));
-        request.setSignName(smsTemplate.getSignName());
-        request.setTemplateCode(smsTemplate.getTemplateCode());
-        request.setTemplateParam(Utils.toJsonStr(smsTemplate.getTemplateParam()));
-        final SendSmsResponse response = Utils.tryChecked(() -> this.acsClient.getAcsResponse(request));
-        checkSmsResponse(response);
+        final CommonRequest request = new CommonRequest();
+        request.setSysMethod(MethodType.POST);
+        request.setSysDomain("dysmsapi.aliyuncs.com");
+        request.setSysVersion("2017-05-25");
+        request.setSysAction("SendSms");
+        request.putQueryParameter("PhoneNumbers", String.join(",", smsTemplate.getPhoneNumbers()));
+        request.putQueryParameter("SignName", smsTemplate.getSignName());
+        request.putQueryParameter("TemplateCode", smsTemplate.getTemplateCode());
+        request.putQueryParameter("TemplateParam", Utils.toJsonStr(smsTemplate.getTemplateParam()));
+        try {
+            final CommonResponse response = this.acsClient.getCommonResponse(request);
+            checkSmsResponse(response);
+        }
+        catch (final ClientException e) {
+            throw new SmsException(e);
+        }
     }
 
 }
