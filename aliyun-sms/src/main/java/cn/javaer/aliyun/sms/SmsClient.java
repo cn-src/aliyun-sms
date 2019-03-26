@@ -77,6 +77,17 @@ public class SmsClient {
     }
 
     /**
+     * Instantiates a new SmsClient.
+     *
+     * @param acsClient IAcsClient
+     * @param smsTemplates 预置短信模板
+     */
+    public SmsClient(final IAcsClient acsClient, final Map<String, SmsTemplate> smsTemplates) {
+        this.acsClient = acsClient;
+        this.smsTemplates = smsTemplates;
+    }
+
+    /**
      * 发送短信验证码.
      *
      * @param phoneNumber 手机号码(中国)
