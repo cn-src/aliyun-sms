@@ -21,12 +21,14 @@ import com.aliyuncs.exceptions.ClientException;
 import com.aliyuncs.http.MethodType;
 import com.aliyuncs.profile.DefaultProfile;
 import com.aliyuncs.profile.IClientProfile;
+import com.google.gson.Gson;
 
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Map;
 import java.util.Objects;
 
+import static cn.javaer.aliyun.sms.Utils.checkBatchSmsTemplate;
 import static cn.javaer.aliyun.sms.Utils.checkNotEmpty;
 import static cn.javaer.aliyun.sms.Utils.checkPhoneNumber;
 import static cn.javaer.aliyun.sms.Utils.checkSmsResponse;
@@ -42,6 +44,7 @@ public class SmsClient {
 
     private final IAcsClient acsClient;
     private final Map<String, SmsTemplate> smsTemplates;
+    private final Gson gson = new Gson();
 
     /**
      * Instantiates a new SmsClient.
@@ -145,4 +148,37 @@ public class SmsClient {
         }
     }
 
+    /**
+     * 批量发送短信.
+     *
+     * <p>
+     * 批量发送短信接口，支持在一次请求中分别向多个不同的手机号码发送不同签名的短信。
+     * 手机号码，签名，模板参数字段个数相同，一一对应，短信服务根据字段的顺序判断发往指定手机号码的签名。
+     *
+     * <p>
+     * 如果您需要往多个手机号码中发送同样签名的短信，请使用 {@link #send(SmsTemplate)}。
+     *
+     * @param batchSmsTemplate 批量发送短信模板
+     */
+    public void send(final BatchSmsTemplate batchSmsTemplate) {
+        Objects.requireNonNull(batchSmsTemplate);
+        checkBatchSmsTemplate(batchSmsTemplate);
+
+        final CommonRequest request = new CommonRequest();
+        request.setSysMethod(MethodType.POST);
+        request.setSysDomain("dysmsapi.aliyuncs.com");
+        request.setSysVersion("2017-05-25");
+        request.setSysAction("SendBatchSms");
+        request.putQueryParameter("PhoneNumberJson", this.gson.toJson(batchSmsTemplate.getPhoneNumbers()));
+        request.putQueryParameter("SignNameJson", this.gson.toJson(batchSmsTemplate.getSignNames()));
+        request.putQueryParameter("TemplateCode", batchSmsTemplate.getTemplateCode());
+        request.putQueryParameter("TemplateParamJson", this.gson.toJson(batchSmsTemplate.getTemplateParams()));
+        try {
+            final CommonResponse response = this.acsClient.getCommonResponse(request);
+            checkSmsResponse(response);
+        }
+        catch (final ClientException e) {
+            throw new SmsException(e);
+        }
+    }
 }
