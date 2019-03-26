@@ -7,14 +7,17 @@ import java.util.Map;
 import java.util.concurrent.ThreadLocalRandom;
 
 /**
- * 工具类，内部使用，作为库自身尽可能减少对第三方库的依赖.
+ * 工具类，内部使用.
  *
  * @author cn-src
  */
 class Utils {
 
     private static final String SUCCESS_CODE = "OK";
-    private static final String PHONE_NUMBER_REGEX = "1\\d{10}";
+    /**
+     * 宽松校验即可.
+     */
+    private static final String PHONE_NUMBER_REGEX = "\\d{5,}";
 
     /**
      * 生成随机验证码.
