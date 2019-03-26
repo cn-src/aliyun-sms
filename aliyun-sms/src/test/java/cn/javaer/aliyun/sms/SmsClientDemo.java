@@ -3,7 +3,10 @@ package cn.javaer.aliyun.sms;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author cn-src
@@ -30,5 +33,18 @@ public class SmsClientDemo {
                 .build();
 
         this.smsClient.send(smsTemplate);
+    }
+
+    @Test
+    public void send() {
+        final Map<String, String> param = new HashMap<>();
+        param.put("code", "123456");
+        final BatchSmsTemplate batchSmsTemplate = BatchSmsTemplate.builder()
+                .phoneNumbers(Arrays.asList("", ""))
+                .signNames(Arrays.asList("", ""))
+                .templateCode("")
+                .templateParams((Arrays.asList(param, param)))
+                .build();
+        this.smsClient.send(batchSmsTemplate);
     }
 }
