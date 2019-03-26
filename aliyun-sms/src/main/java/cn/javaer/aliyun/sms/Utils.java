@@ -3,6 +3,7 @@ package cn.javaer.aliyun.sms;
 import com.aliyuncs.CommonResponse;
 import com.google.gson.Gson;
 
+import java.util.Collection;
 import java.util.Map;
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -63,15 +64,28 @@ class Utils {
      * @param template the SmsTemplate
      */
     static void checkSmsTemplate(final SmsTemplate template) {
-        if (null == template.getSignName() || template.getSignName().isEmpty()) {
-            throw new IllegalArgumentException("SmsTemplate signName must be not empty");
-        }
-        if (null == template.getTemplateCode() || template.getTemplateCode().isEmpty()) {
-            throw new IllegalArgumentException("SmsTemplate templateCode must be not empty");
 
-        }
-        if (null == template.getPhoneNumbers() || template.getPhoneNumbers().isEmpty()) {
-            throw new IllegalArgumentException("SmsTemplate phoneNumbers must be not empty");
+        checkNotEmpty(template.getSignName(), "SmsTemplate signName must be not empty");
+        checkNotEmpty(template.getTemplateCode(), "SmsTemplate templateCode must be not empty");
+        checkNotEmpty(template.getPhoneNumbers(), "SmsTemplate phoneNumbers must be not empty");
+
+    }
+
+    /**
+     * 校验 BatchSmsTemplate.
+     *
+     * @param template the BatchSmsTemplate
+     */
+    static void checkBatchSmsTemplate(final BatchSmsTemplate template) {
+
+        checkNotEmpty(template.getSignNames(), "BatchSmsTemplate signNames must be not empty");
+        checkNotEmpty(template.getPhoneNumbers(), "BatchSmsTemplate phoneNumbers must be not empty");
+        checkNotEmpty(template.getTemplateCode(), "BatchSmsTemplate templateCode must be not empty");
+        checkNotEmpty(template.getTemplateParams(), "BatchSmsTemplate templateParams must be not empty");
+
+        if (template.getSignNames().size() != template.getPhoneNumbers().size()
+                && template.getPhoneNumbers().size() != template.getTemplateParams().size()) {
+            throw new IllegalArgumentException("BatchSmsTemplate phoneNumbers, signNames, templateParams size must be the same");
         }
     }
 
@@ -110,6 +124,18 @@ class Utils {
      */
     static void checkNotEmpty(final String str, final String message) {
         if (null == str || str.isEmpty()) {
+            throw new IllegalArgumentException(message);
+        }
+    }
+
+    /**
+     * 校验集合不为空.
+     *
+     * @param coll the Collection
+     * @param message the message
+     */
+    static void checkNotEmpty(final Collection coll, final String message) {
+        if (null == coll || coll.isEmpty()) {
             throw new IllegalArgumentException(message);
         }
     }
