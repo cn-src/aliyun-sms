@@ -110,45 +110,4 @@ class Utils {
             throw new IllegalArgumentException(message);
         }
     }
-
-    /**
-     * 处理受检查异常.
-     *
-     * @param <T> the type parameter
-     * @param fun the fun
-     *
-     * @return the fun return
-     */
-    static <T> T tryChecked(final CheckedSupplier<T> fun) {
-        try {
-            return fun.get();
-        }
-        catch (final Exception e) {
-            if (e instanceof RuntimeException) {
-                throw (RuntimeException) e;
-            }
-            else {
-                throw new SmsException(e);
-            }
-        }
-    }
-
-    /**
-     * 处理受检查异常.
-     *
-     * @param fun the fun
-     */
-    static void tryChecked(final CheckedVoid fun) {
-        try {
-            fun.call();
-        }
-        catch (final Exception e) {
-            if (e instanceof RuntimeException) {
-                throw (RuntimeException) e;
-            }
-            else {
-                throw new SmsException(e);
-            }
-        }
-    }
 }
