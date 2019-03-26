@@ -101,7 +101,7 @@ class Utils {
         final Gson gson = new Gson();
         final Map<String, String> json = gson.fromJson(response.getData(), Map.class);
         if (!SUCCESS_CODE.equalsIgnoreCase(json.get("Code"))) {
-            throw new SmsException("Response is '" + response.getData() + "'");
+            throw new SmsException("Http status: " + response.getHttpStatus() + ", response: " + response.getData());
         }
     }
 
